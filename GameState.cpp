@@ -1,10 +1,12 @@
 #include "GameState.h"
+#include <stdio.h>
 
 #define PI 3.14159265
 #define SENSORLENGTH 40
 #define BASESPEED 1
 #define GROWTHRATE 100
 #define TOTALSNAKES 8
+#define POPULATION 8
 
 double GameState::Dist(double X0, double Y0, double X1, double Y1)
 {
@@ -12,8 +14,8 @@ double GameState::Dist(double X0, double Y0, double X1, double Y1)
     return(r);
 }
 
-void GameState::SpawnSnake(int X, int Y, int Angle, int Radius){
-    Snake Sn;
+void GameState::SpawnSnake(int X, int Y, int Angle, int Radius, int PopCount){
+    Snake Sn(Population[PopCount]);
     Sn.Body[0].X = X;
     Sn.Body[0].Y = Y;
     Sn.A = Angle;
@@ -24,8 +26,13 @@ void GameState::SpawnSnake(int X, int Y, int Angle, int Radius){
 GameState::GameState(int W, int H)
 {
     srand(time(NULL));
+    for(int i = 0; i < POPULATION; i++)
+    {
+        DNA Temp;
+        Population.push_back(Temp);
+    }
     for(int i = 0; i < TOTALSNAKES; i++)
-        SpawnSnake(400, 400 + 10 * i, 0, 5);
+        SpawnSnake(400, 400 + 10 * i, 0, 5, i);
     Width = W;
     Height = H;
     NewFood();
@@ -45,17 +52,18 @@ void GameState::EatFood(unsigned int i)
         S[i].AddBodyPart();
 }
 
+// REFACTOR: change this into something other than just moving the snake back
 void GameState::Reset(unsigned int i)
 {
     S[i].Body.resize(1);
     S[i].Body[0].X = 400;
     S[i].Body[0].Y = 400;
-    S[i].A = 0;
-    for(unsigned int i = 0; i < S[i].Sensors.size(); i++)
-    {
-        S[i].Sensors[i].X = S[i].Body[0].X;
-        S[i].Sensors[i].Y = S[i].Body[0].Y;
-    }
+    S[i].A = rand() % 360*PI/180;
+    // for(unsigned int i = 0; i < S[i].Sensors.size(); i++)
+    // {
+    //     S[i].Sensors[i].X = S[i].Body[0].X;
+    //     S[i].Sensors[i].Y = S[i].Body[0].Y;
+    // }
 }
 
 void GameState::CheckCollision(unsigned int i)

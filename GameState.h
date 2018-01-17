@@ -22,11 +22,12 @@ public:
     Food F;
     int Width;
     int Height;
+    std::vector<DNA> Population;
+    void NewFood();// TODO: move back to private. Being used to move food at will.
 private:  // could pass pointers to snake instead of passing i but this is probably fine
     void Reset(unsigned int i);
     void CheckCollision(unsigned int i);
     void EatFood(unsigned int i);
-    void NewFood();
-    void SpawnSnake(int X, int Y, int Angle, int Radius);
+    void SpawnSnake(int X, int Y, int Angle, int Radius, int PopCount);
     double Dist(double X0, double Y0, double X1, double Y1);
 };

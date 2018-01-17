@@ -18,7 +18,7 @@ double Angle = 0;
 
 static GameState *State = NULL;
 static Renderer *Render = NULL;
-static NeuralNet *Net = NULL;
+// static NeuralNet *Net = NULL;
 
 window_dimension GetWindowDim(HWND Window)
 {
@@ -52,6 +52,7 @@ LRESULT CALLBACK MainWindowCallback(HWND Window,
                 switch(WParam)
                 {
                     case VK_LEFT:
+                        State->NewFood();
                         if(IsDown)
                             Angle = -1;
                         if(WasDown)
@@ -142,8 +143,8 @@ int CALLBACK WinMain(HINSTANCE Instance,
             State = &GS;
             Renderer Ren(Dim.Width, Dim.Height);
             Render = &Ren;
-            NeuralNet NN(0, State->S[0].Sensors.size(), 2);
-            Net = &NN;
+            // NeuralNet NN(0, State->S[0].Sensors.size(), 2);
+            // Net = &NN;
             while(Running)
             {
                 while(PeekMessage(&Message, 0, 0, 0, PM_REMOVE))

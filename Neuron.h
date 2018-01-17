@@ -1,3 +1,4 @@
+#include "DNA.h"
 #include <vector>
 
 class Neuron

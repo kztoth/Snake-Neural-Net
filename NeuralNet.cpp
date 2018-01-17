@@ -1,30 +1,30 @@
 #include "NeuralNet.h"
 
-NeuralNet::NeuralNet(int LayerAmount, int Inputs, int Outputs)
+NeuralNet::NeuralNet(std::vector<int> LayerNodes, int Inputs, int Outputs, std::vector< std::vector< std::vector<double> > > Weights)
 {
+    int LayerAmount = LayerNodes.size();
     Layers.resize(LayerAmount + 2);
     Neuron In(0, 0);
     for(int i = 0; i < Inputs; i++)
         Layers[0].push_back(In);
+
+
+    for(int i = 1; i <= LayerAmount; i++)
+    {
+        for(int j = 0; j < LayerNodes[i-1]; j++)
+        {
+            Neuron Temp(0, Layers[i-1].size());
+            Temp.SetWeights(Weights[i-1][j]);
+            Layers[i].push_back(Temp);
+        }
+    }
+
     Neuron Out(0, Layers[Layers.size()-2].size());
     for(int i = 0; i < Outputs; i++)
         Layers.back().push_back(Out);
 
-    // testing values
-    std::vector<double> A;
-    A.push_back(1);
-    A.push_back(1);
-    A.push_back(.1);
-    A.push_back(-1);
-    A.push_back(-1);
-    std::vector<double> S;
-    S.push_back(1);
-    S.push_back(1);
-    S.push_back(1);
-    S.push_back(1);
-    S.push_back(1);
-    Layers.back()[0].SetWeights(A);
-    Layers.back()[1].SetWeights(S);
+    Layers.back()[0].SetWeights(Weights.back()[0]);
+    Layers.back()[1].SetWeights(Weights.back()[1]);
 }
 
 void NeuralNet::GetResults(std::vector<Sensor> Sensors)
