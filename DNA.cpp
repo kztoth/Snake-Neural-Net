@@ -1,6 +1,7 @@
 #include "DNA.h"
 #include <stdio.h>
 
+// Name is not currently used for anything. Will be in the future.
 void DNA::GenName(int Length)
 {
     static const char Alpha[] = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -56,6 +57,7 @@ DNA::DNA()
 void DNA::Print()
 {
     printf("DNA Name: %s\n", Name);
+    printf("Fitness: %f\n", Fitness);
     printf("Sensor Count: %d\n", SensorAngle.size());
     printf("Sensor Angles:\n");
     for(unsigned int i = 0; i < SensorAngle.size(); i++)
@@ -69,14 +71,16 @@ void DNA::Print()
     for(unsigned int i = 0; i < Layers.size(); i++)
         printf("%d\t", Layers[i]);
     printf("\n");
-    // printf("Weights:\n");
-    // for(unsigned int i = 0; i < Weights.size(); i++)
-    // {
-    //     for(unsigned int j = 0; j < Weights[i].size(); j++)
-    //     {
-    //         printf("%d\t", Weights[i][j].size());
-    //     }
-    //     printf("\n");
-    // }
+    printf("Weights:\n");
+    for(unsigned int i = 0; i < Weights.size(); i++)
+    {
+        for(unsigned int j = 0; j < Weights[i].size(); j++)
+        {
+            printf("%d\t", Weights[i][j].size());
+            // for(unsigned int k = 0; k < Weights[i][j].size(); k++)
+            //     printf("%f ", Weights[i][j][k]);
+        }
+        printf("\n");
+    }
     printf("\n");
 }

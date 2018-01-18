@@ -19,6 +19,4 @@ Snake::Snake(DNA Dna)
 
     NeuralNet Net(D.Layers, Sensors.size(), 2, D.Weights);
     NN = Net;
-
-    D.Print();
 }

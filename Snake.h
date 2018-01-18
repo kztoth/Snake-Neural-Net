@@ -18,5 +18,6 @@ public:
     std::vector<Sensor> Sensors;
     NeuralNet NN;
     DNA D;
+    int PopIndex;
 private:
 };
